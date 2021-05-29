@@ -14,12 +14,14 @@ public class Application {
 
 
     private static final String url = "http://upc/fib/open_data/p3/pistocchi_romani/conferences_db/";
-    private static final String AUTHOR_LOCATOR = "author/";
-    private static final String PAPER_LOCATOR = "paper/";
-    private static final String SUBMISSION_LOCATOR = "submission/";
-    private static final String CONFERENCE_LOCATOR = "conference/";
-    private static final String KA_LOCATOR = "knowledge_area/";
-    private static final String JOURNAL_LOCATOR = "journal/";
+    private static final String propUrl = "http://upc/fib/open_data/p3/pistocchi_romani/conferences_db#";
+
+    private static final String AUTHOR_LOCATOR = "author#";
+    private static final String PAPER_LOCATOR = "paper#";
+    private static final String SUBMISSION_LOCATOR = "submission#";
+    private static final String CONFERENCE_LOCATOR = "conference#";
+    private static final String KA_LOCATOR = "knowledge_area#";
+    private static final String JOURNAL_LOCATOR = "journal#";
 
     private static final int LIMIT = 100;
 
@@ -35,14 +37,14 @@ public class Application {
             Resource conference = model.createResource(url + CONFERENCE_LOCATOR + e.conferenceOrJournalName());
             Resource knowledgeArea = model.createResource(url + KA_LOCATOR + e.knowledgeArea());
 
-            auth.addProperty(model.createProperty(url + "writes"),paper);
-            auth.addProperty(model.createProperty(url + "submit"),submission);
-            paper.addProperty(model.createProperty(url + "submitted"),submission);
-            paper.addProperty(model.createProperty(url + "publishedInConference"),conference);
-            paper.addLiteral(model.createProperty(url + "title"),e.paperTitle());
-            conference.addProperty(model.createProperty(url + "paperKnowledgeArea"),knowledgeArea);
-            conference.addProperty(model.createProperty(url + "conferenceKnowledgeArea"),knowledgeArea);
-            submission.addProperty(model.createProperty(url + "forConference"),conference);
+            auth.addProperty(model.createProperty(propUrl + "writes"),paper);
+            auth.addProperty(model.createProperty(propUrl + "submit"),submission);
+            paper.addProperty(model.createProperty(propUrl + "submitted"),submission);
+            paper.addProperty(model.createProperty(propUrl + "publishedInConference"),conference);
+            paper.addLiteral(model.createProperty(propUrl + "title"),e.paperTitle());
+            conference.addProperty(model.createProperty(propUrl + "paperKnowledgeArea"),knowledgeArea);
+            conference.addProperty(model.createProperty(propUrl + "conferenceKnowledgeArea"),knowledgeArea);
+            submission.addProperty(model.createProperty(propUrl + "forConference"),conference);
         });
 
         // Journals
@@ -53,18 +55,17 @@ public class Application {
             Resource journal = model.createResource(url + JOURNAL_LOCATOR + e.conferenceOrJournalName());
             Resource knowledgeArea = model.createResource(url + KA_LOCATOR + e.knowledgeArea());
 
-            auth.addProperty(model.createProperty(url + "writes"),paper);
-            auth.addProperty(model.createProperty(url + "submit"),submission);
-            paper.addProperty(model.createProperty(url + "submitted"),submission);
-            paper.addProperty(model.createProperty(url + "publishedInConference"),journal);
-            journal.addProperty(model.createProperty(url + "paperKnowledgeArea"),knowledgeArea);
-            journal.addProperty(model.createProperty(url + "conferenceKnowledgeArea"),knowledgeArea);
-            submission.addProperty(model.createProperty(url + "forJournal"),journal);
+            auth.addProperty(model.createProperty(propUrl + "writes"),paper);
+            auth.addProperty(model.createProperty(propUrl + "submit"),submission);
+            paper.addProperty(model.createProperty(propUrl + "submitted"),submission);
+            paper.addProperty(model.createProperty(propUrl + "publishedInConference"),journal);
+            journal.addProperty(model.createProperty(propUrl + "paperKnowledgeArea"),knowledgeArea);
+            journal.addProperty(model.createProperty(propUrl + "conferenceKnowledgeArea"),knowledgeArea);
+            submission.addProperty(model.createProperty(propUrl + "forJournal"),journal);
         });
 
         System.out.println(model);
         model.write(new FileWriter(ABOX),"RDF/XML");
-
 
     }
 }
