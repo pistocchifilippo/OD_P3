@@ -17,12 +17,12 @@ public class Application {
         Resource johnSmith = model.createResource(personURI);
 
 
-        final String url = "http://upc/fib/open_data/p3/";
+        final String url = "http://upc/fib/open_data/p3/conference_db/";
 
-        new ReadCsv().getAll().forEach(e -> {
-            final Resource auth = model.createResource(url + "/author/" + e.authorName());
-            auth.addProperty(model.createProperty(url + "/write"), e.paperCode());
-            johnSmith.addProperty(VCARD.FN, fullName);
+        new ReadCsv().getAll().limit(2).forEach(e -> {
+            System.out.println(e.authorName());
+            final Resource auth = model.createResource(url + "author/" + e.authorName());
+            auth.addProperty(model.createProperty(url + "write"), url + e.paperCode());
         });
 
         System.out.println(model);

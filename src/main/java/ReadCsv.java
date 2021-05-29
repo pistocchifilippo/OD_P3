@@ -1,10 +1,8 @@
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class ReadCsv {
@@ -19,56 +17,57 @@ public class ReadCsv {
     private final int REVIEWERS_3 = 19;
 
     Stream<Line> getAll() {
-        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/dataset.csv"))) {
-            List<String[]> r = reader.readAll();
-            return r.stream()
-                    .map(Arrays::toString)
-                    .map(e -> {
-                        String[] s = e.split(",");
-                        System.out.println(s[REVIEWERS_3]);
-                        return new LineImplementation(
-                                s[AUTHOR_NAME],
-                                s[CONFERENCE_NAME],
-                                s[KEYWORD],
-                                s[PARER_TITLE],
-                                s[PAPER_CODE],
-                                s[REVIEWERS_1],
-                                s[REVIEWERS_2],
-                                s[REVIEWERS_3]
-                        );
-                    });
-        } catch (IOException | CsvException e) {
+        List<Line> lines = new LinkedList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/dataset.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] s = line.split(",");
+                Line l = new LineImplementation(
+                        s[AUTHOR_NAME],
+                        s[CONFERENCE_NAME],
+                        s[KEYWORD],
+                        s[PARER_TITLE],
+                        s[PAPER_CODE],
+                        s[REVIEWERS_1],
+                        s[REVIEWERS_2],
+                        s[REVIEWERS_3]
+                );
+                lines.add(l);
+            }
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return lines.stream();
     }
 
-//    public static void main(String[] args) throws IOException, CsvException {
-//
-//        FileWriter out = new FileWriter("src/main/resources/dataset.csv");
-//
-//        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/Connections_Conf.csv"))) {
-//            Set<String> paperCode = new HashSet<>();
-//            List<String[]> r = reader.readAll();
-////            r.forEach(x -> System.out.println(Arrays.toString(x)));
-//            r.stream()
-//                    .map(x -> Arrays.toString(x))
-//                    .filter(e -> {
-//                        String code = e.split(",")[1];
-//                        boolean pass = !paperCode.contains(code);
-//                        paperCode.add(code);
-//                        return pass;
-//                    })
-//                    .map(s -> s.replace("[","").replace("]",""))
-////                    .forEach(e -> System.out.println(e));
-//                    .forEach(e -> {
-//                        try {
-//                            out.write(e);
-//                            out.write("\n");
-//                        } catch (IOException ioException) {
-//                            ioException.printStackTrace();
-//                        }
-//                    });
-//        }
-//    }
+    public static void main(String[] args) throws IOException, CsvException {
+
+        FileWriter out = new FileWriter("src/main/resources/dataset.csv");
+
+        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/Connections_Conf.csv"))) {
+            Set<String> paperCode = new HashSet<>();
+            List<String[]> r = reader.readAll();
+//            r.forEach(x -> System.out.println(Arrays.toString(x)));
+            r.stream()
+                    .map(x -> Arrays.toString(x))
+                    .filter(e -> {
+                        String code = e.split(",")[1];
+                        boolean pass = !paperCode.contains(code);
+                        paperCode.add(code);
+                        return pass;
+                    })
+                    .map(s -> s.replace("[","").replace("]","").replace(", ",",").replace(" ","_"))
+//                    .forEach(e -> System.out.println(e));
+                    .forEach(e -> {
+                        try {
+                            out.write(e);
+                            out.write("\n");
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+        }
+    }
 }
