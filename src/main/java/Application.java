@@ -27,6 +27,7 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 
+        // Conferences
         new ReadCsv().getAll(CONFERENCES).limit(LIMIT).forEach(e -> {
             Resource auth = model.createResource(url + AUTHOR_LOCATOR + e.authorName());
             Resource submission = model.createResource(url + SUBMISSION_LOCATOR + e.submission());
@@ -44,6 +45,7 @@ public class Application {
             submission.addProperty(model.createProperty(url + "forConference"),conference);
         });
 
+        // Journals
         new ReadCsv().getAll(JOURNALS).limit(LIMIT).forEach(e -> {
             Resource auth = model.createResource(url + AUTHOR_LOCATOR + e.authorName());
             Resource submission = model.createResource(url + SUBMISSION_LOCATOR + e.submission());
@@ -57,7 +59,7 @@ public class Application {
             paper.addProperty(model.createProperty(url + "publishedInConference"),journal);
             journal.addProperty(model.createProperty(url + "paperKnowledgeArea"),knowledgeArea);
             journal.addProperty(model.createProperty(url + "conferenceKnowledgeArea"),knowledgeArea);
-            submission.addProperty(model.createProperty(url + "forConference"),journal);
+            submission.addProperty(model.createProperty(url + "forJournal"),journal);
         });
 
         System.out.println(model);
