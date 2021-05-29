@@ -19,12 +19,13 @@ public class ReadCsv {
     private final int REVIEWERS_3 = 19;
 
     Stream<Line> getAll() {
-        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/Connections_Conf.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/dataset.csv"))) {
             List<String[]> r = reader.readAll();
             return r.stream()
                     .map(Arrays::toString)
                     .map(e -> {
                         String[] s = e.split(",");
+                        System.out.println(s[REVIEWERS_3]);
                         return new LineImplementation(
                                 s[AUTHOR_NAME],
                                 s[CONFERENCE_NAME],
