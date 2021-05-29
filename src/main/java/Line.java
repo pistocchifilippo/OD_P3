@@ -4,7 +4,7 @@ public interface Line {
 
     // Default properties
     String authorName();
-    String conferenceName();
+    String conferenceOrJournalName();
     String keyword();
     String paperTitle();
     String paperCode();

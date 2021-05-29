@@ -4,14 +4,14 @@ import java.util.Set;
 public class LineImplementation implements Line {
 
     String authorName;
-    String conferenceName;
+    String conferenceOrJournalName;
     String keyword;
     String paperTitle;
     String paperCode;
     Set<String> reviewers;
 
     public LineImplementation(String authorName,
-                              String conferenceName,
+                              String conferenceOrJournalName,
                               String keyword,
                               String paperTitle,
                               String paperCode,
@@ -19,7 +19,7 @@ public class LineImplementation implements Line {
                               String reviewer2,
                               String reviewer3) {
         this.authorName = authorName;
-        this.conferenceName = conferenceName;
+        this.conferenceOrJournalName = conferenceOrJournalName;
         this.keyword = keyword;
         this.paperTitle = paperTitle;
         this.paperCode = paperCode;
@@ -36,8 +36,8 @@ public class LineImplementation implements Line {
     }
 
     @Override
-    public String conferenceName() {
-        return conferenceName;
+    public String conferenceOrJournalName() {
+        return conferenceOrJournalName;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class LineImplementation implements Line {
 
     @Override
     public String submission() {
-        return "SUB:" + paperCode + "_" + conferenceName + "_" + authorName.replaceAll(" ","");
+        return "SUB:" + paperCode + "_" + conferenceOrJournalName + "_" + authorName.replaceAll(" ","");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class LineImplementation implements Line {
     public String toString() {
         return "LineImplementation{" +
                 "authorName='" + authorName + '\'' +
-                ", conferenceName='" + conferenceName + '\'' +
+                ", conferenceName='" + conferenceOrJournalName + '\'' +
                 ", keyword='" + keyword + '\'' +
                 ", paperTitle='" + paperTitle + '\'' +
                 ", paperCode='" + paperCode + '\'' +
