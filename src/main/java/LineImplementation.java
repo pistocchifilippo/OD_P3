@@ -41,7 +41,7 @@ public class LineImplementation implements Line {
     }
 
     @Override
-    public String keyword() {
+    public String knowledgeArea() {
         return keyword;
     }
 

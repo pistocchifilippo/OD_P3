@@ -5,7 +5,7 @@ public interface Line {
     // Default properties
     String authorName();
     String conferenceOrJournalName();
-    String keyword();
+    String knowledgeArea();
     String paperTitle();
     String paperCode();
     Set<String> reviewers();
