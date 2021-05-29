@@ -34,11 +34,12 @@ public class Application {
             auth.addProperty(model.createProperty(url + "submit"),submission);
             paper.addProperty(model.createProperty(url + "submitted"),submission);
             paper.addProperty(model.createProperty(url + "publishedInConference"),conference);
+            paper.addLiteral(model.createProperty(url + "title"),e.paperTitle());
             conference.addProperty(model.createProperty(url + "paperKnowledgeArea"),knowledgeArea);
             conference.addProperty(model.createProperty(url + "conferenceKnowledgeArea"),knowledgeArea);
             submission.addProperty(model.createProperty(url + "forConference"),conference);
         });
-        
+
 //        new ReadCsv().getAll(JOURNALS).limit(2).forEach(e -> {
 //            Resource auth = model.createResource(url + AUTHOR_LOCATOR + e.authorName());
 //            Resource submission = model.createResource(url + SUBMISSION_LOCATOR + e.submission());
