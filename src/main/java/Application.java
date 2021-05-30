@@ -58,9 +58,9 @@ public class Application {
             auth.addProperty(model.createProperty(propUrl + "writes"),paper);
             auth.addProperty(model.createProperty(propUrl + "submit"),submission);
             paper.addProperty(model.createProperty(propUrl + "submitted"),submission);
-            paper.addProperty(model.createProperty(propUrl + "publishedInConference"),journal);
+            paper.addProperty(model.createProperty(propUrl + "publishedInJournal"),journal);
             journal.addProperty(model.createProperty(propUrl + "paperKnowledgeArea"),knowledgeArea);
-            journal.addProperty(model.createProperty(propUrl + "conferenceKnowledgeArea"),knowledgeArea);
+            journal.addProperty(model.createProperty(propUrl + "journalKnowledgeArea"),knowledgeArea);
             submission.addProperty(model.createProperty(propUrl + "forJournal"),journal);
         });
 
