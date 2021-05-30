@@ -1,22 +1,27 @@
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
-
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class ReadCsv {
 
-    private final int AUTHOR_NAME = 3;
-    private final int CONFERENCE_NAME = 4;
-    private final int KEYWORD = 7;
-    private final int PARER_TITLE = 10;
-    private final int PAPER_CODE = 1;
-    private final int REVIEWERS_1 = 17;
-    private final int REVIEWERS_2 = 18;
-    private final int REVIEWERS_3 = 19;
+    private static final int AUTHOR_NAME = 3;
+    private static final int CONFERENCE_NAME = 4;
+    private static final int KEYWORD = 7;
+    private static final int PARER_TITLE = 10;
+    private static final int PAPER_CODE = 1;
+    private static final int REVIEWERS_1 = 17;
+    private static final int REVIEWERS_2 = 18;
+    private static final int REVIEWERS_3 = 19;
 
-    Stream<Line> getAll(final String path) {
+    /***
+     *
+     * @param path The path of the file you want to read
+     * @return A steam of Line
+     */
+    public static Stream<Line> getAll(final String path) throws IOException{
         List<Line> lines = new LinkedList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
@@ -34,10 +39,6 @@ public class ReadCsv {
                 );
                 lines.add(l);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return lines.stream();
     }

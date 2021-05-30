@@ -4,14 +4,12 @@ import org.apache.jena.rdf.model.Resource;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 
 public class Application {
 
-    private static final String CONFERENCES = "src/main/resources/dataset_conferences.csv";
-    private static final String JOURNALS = "src/main/resources/dataset_journal.csv";
-    private static final String ABOX = "src/main/resources/ABOX.rdf";
-
+    private static final String CONFERENCES_FILE = "src/main/resources/dataset_conferences.csv";
+    private static final String JOURNALS_FILE = "src/main/resources/dataset_journal.csv";
+    private static final String ABOX_OUTPUT_FILE = "src/main/resources/ABOX.rdf";
 
     private static final String url = "http://upc/fib/open_data/p3/pistocchi_romani/conferences_db/";
     private static final String propUrl = "http://upc/fib/open_data/p3/pistocchi_romani/conferences_db#";
@@ -30,7 +28,7 @@ public class Application {
     public static void main(String[] args) throws IOException {
 
         // Conferences
-        new ReadCsv().getAll(CONFERENCES).limit(LIMIT).forEach(e -> {
+        ReadCsv.getAll(CONFERENCES_FILE).limit(LIMIT).forEach(e -> {
             Resource auth = model.createResource(url + AUTHOR_LOCATOR + e.authorName());
             Resource submission = model.createResource(url + SUBMISSION_LOCATOR + e.submission());
             Resource paper = model.createResource(url + PAPER_LOCATOR + e.paperCode());
@@ -48,7 +46,7 @@ public class Application {
         });
 
         // Journals
-        new ReadCsv().getAll(JOURNALS).limit(LIMIT).forEach(e -> {
+        ReadCsv.getAll(JOURNALS_FILE).limit(LIMIT).forEach(e -> {
             Resource auth = model.createResource(url + AUTHOR_LOCATOR + e.authorName());
             Resource submission = model.createResource(url + SUBMISSION_LOCATOR + e.submission());
             Resource paper = model.createResource(url + PAPER_LOCATOR + e.paperCode());
@@ -65,7 +63,7 @@ public class Application {
         });
 
         System.out.println(model);
-        model.write(new FileWriter(ABOX),"RDF/XML");
+        model.write(new FileWriter(ABOX_OUTPUT_FILE),"RDF/XML");
 
     }
 }
